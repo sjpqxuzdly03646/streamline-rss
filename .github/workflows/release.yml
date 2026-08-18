@@ -29,7 +29,14 @@ jobs:
         run: npm run lint
 
       - name: Test
-        run: npm test
+        run: npm test 2>&1 | tee /tmp/vitest.log
+
+      - name: Upload test logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-logs
+          path: /tmp/vitest.log
 
       - name: Build
         run: npm run build
