@@ -1,0 +1,7 @@
+name = "streamline-rss-proxy"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# 免费额度: 10 万请求/天, 缓存走 Cache API (免费版自带, 无需 KV 配置)
+[observability]
+enabled = false

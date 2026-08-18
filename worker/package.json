@@ -1,0 +1,18 @@
+{
+  "name": "streamline-rss-proxy",
+  "private": true,
+  "version": "1.1.0",
+  "description": "Streamline RSS 自建代理 (Cloudflare Worker): RSS 转发 + 全文提取, 15 分钟缓存",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "@mozilla/readability": "^0.6.0",
+    "linkedom": "^0.18.9"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

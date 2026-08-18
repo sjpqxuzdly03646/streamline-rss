@@ -1,0 +1,34 @@
+# 依赖
+node_modules/
+
+# 构建产物
+dist/
+dist-ssr/
+
+# 环境变量与本地配置 (含密钥, 一律不入库)
+.env
+.env.*
+!.env.example
+*.local
+worker/.dev.vars
+
+# 本地工具缓存
+worker/.wrangler/
+.wrangler/
+.vite/
+
+# 测试与覆盖率
+coverage/
+
+# 日志
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 编辑器 / 系统
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db
