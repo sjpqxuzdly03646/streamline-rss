@@ -1,0 +1,62 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Package dist
+        run: zip -qr streamline-rss-${{ github.ref_name }}-dist.zip dist
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          body: |
+            🎉 Streamline RSS 极简阅读器
+
+            玻璃拟态风格的 Vue 3 RSS 阅读器, 双主题 (暗色/亮色), 完整订阅管理与离线阅读体验。
+
+            - **阅读**: 三栏布局 / 阅读进度记忆 / 长文目录 / 代码高亮 / 图片放大 / 全文抓取 (Readability)
+            - **订阅**: 真实 RSS/Atom 解析, 自建 Cloudflare Worker 代理 + 公共代理回退
+            - **管理**: 分类树 / 分类图标 / 订阅规则 (自动已读·星标·隐藏) / OPML 导入导出 / JSON 备份恢复
+            - **效率**: 快捷键 / 模糊搜索 / 自动刷新 + 桌面通知 / 列表分页
+            - **移动端**: 未读角标一键跳第一条未读 / 右下角悬浮操作按钮 / 菜单内分类列表
+            - **PWA**: 可安装到桌面, 离线可用, 图标未读角标
+            - **隐私**: 全部数据存于浏览器本地, 仅抓取 RSS 时联网
+
+            ### 📦 本包内容
+            - `streamline-rss-<tag>-dist.zip`: 生产构建产物, 可直接静态托管 (Cloudflare Pages / GitHub Pages / Nginx)
+
+            MIT License
+          files: streamline-rss-*.zip
+          generate_release_notes: true
